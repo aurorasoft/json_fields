@@ -2,7 +2,7 @@
 # JSON-Stored Fields
 # (c) 2008-2009 Aurora Software (http://www.aurorasoft.com.au)
 #
-# http://www.github.com/aurorasoft/json-fields-plugin
+# http://www.github.com/aurorasoft/json_fields
 #
 ######
 

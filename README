@@ -18,7 +18,7 @@ and then get and set them at runtime using json_field_get() and json_field_set()
 Installation
 ============
 
-ruby script/plugin install git://github.com/aurorasoft/json-fields-plugin.git
+ruby script/plugin install git://github.com/aurorasoft/json_fields.git
 
 Usage
 =====
