@@ -1,0 +1,72 @@
+JSON-Stored Fields
+==================
+
+Allows for a group of "unimportant" fields to be stored as a JSON hash,
+rather than as real database columns.
+
+This is useful in cases where you have many classes inheriting from a
+base class, but with drastically different fields which would clutter up
+the database.
+
+Obviously this prevents you from searching for these records based upon this
+data.
+
+However, it does enable you to dynamically add and remove fields from your models
+at runtime. For example, you can allow the user to specify extra fields for a model,
+and then get and set them at runtime using json_field_get() and json_field_set().
+
+Installation
+============
+
+ruby script/plugin install git://github.com/aurorasoft/json-fields-plugin.git
+
+Usage
+=====
+
+Fields are defined using the following syntax :
+  has_json_field :field1, :field2, :field3
+
+These fields can then be accessed as per usual, but are stored as a JSON hash
+in the "json_field" column (which you will need to add as a :text field).
+
+If you don't like the field named "json_field", you can change it using :
+  set_json_field :another_field_here
+
+Then, all data will be stored in the specified field.
+
+Example
+=======
+
+An entirely contrived example:
+  class TestBase < ActiveRecord::Base
+  end
+
+  class SimpleTest < TestBase
+    has_json_field :your_name, :your_quest, :your_favourite_colour
+  end
+
+  class ComplexTest < TestBase
+    has_json_field :square_root_of_pi, :distance_to_moon_in_meters
+  end
+
+  class ImpossibleTest < TestBase
+    has_json_field :air_speed_velocity_of_an_unladen_swallow
+  end
+
+Runtime-Defined Fields
+======================
+
+In cases where you need to dynamically add and use fields at runtime
+(eg. custom fields) you can also set and get arbitrary fields using
+  json_field_get(:field_name, 'foo') # => "foo"
+  json_field_get(:field_name)        # => "foo"
+
+Caveats
+=======
+
+* Internally we use .to_json, which means that symbols will be converted to
+  strings. As such, you may need to take care.
+* Any Rails code handling whether the instance has changed will likely not
+  report changes to the JSON fields.
+
+Copyright (c) 2008-2009 Aurora Software (http://www.aurorasoft.com.au), released under the MIT license
